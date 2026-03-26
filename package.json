@@ -1,0 +1,10 @@
+{
+  "name": "ai-resume-analyzer",
+  "version": "1.0.0",
+  "description": "AI Resume Analyzer Web App",
+  "scripts": {
+    "dev": "npx --yes live-server ."
+  },
+  "author": "",
+  "license": "ISC"
+}
