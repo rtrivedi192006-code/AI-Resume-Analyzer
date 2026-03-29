@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AI Resume Analyzer</title>
     
     <!-- Modern Typography -->
@@ -11,162 +11,11 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <!-- Header Area -->
-    <header class="header">
-        <div class="logo-container">
-            <div class="logo-icon-wrapper">
-                <i class="fa-solid fa-file-signature logo-icon"></i>
-            </div>
-            <h1 class="title">AI Resume Analyzer</h1>
-        </div>
-        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark/Light Theme">
-            <i class="fa-solid fa-moon"></i>
-        </button>
-    </header>
-
-    <!-- Main Content Container -->
-    <main class="container">
-        
-        <!-- Input Section -->
-        <section class="card input-section">
-            <div class="section-header">
-                <h2>Upload Your Resume</h2>
-                <p class="subtitle">Upload your document or paste the text directly below for instant AI feedback.</p>
-            </div>
-            
-            <div class="upload-container">
-                <div class="file-upload" id="file-drop-area">
-                    <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
-                    <h3>Drag & Drop your resume here</h3>
-                    <span class="or-text">or</span>
-                    <label for="file-input" class="custom-file-upload">
-                        Browse Files
-                    </label>
-                    <input type="file" id="file-input" accept=".pdf,.doc,.docx" hidden>
-                    <p class="file-info" id="file-name">Supported formats: PDF, DOC, DOCX (Max 5MB)</p>
-                </div>
-            </div>
-
-            <div class="divider">
-                <span>OR PASTE TEXT</span>
-            </div>
-
-            <div class="textarea-container">
-                <label for="resume-text" class="sr-only">Paste Resume Text</label>
-                <textarea id="resume-text" placeholder="Paste your resume content here for quick analysis..." rows="8"></textarea>
-            </div>
-
-            <div class="action-container">
-                <button id="analyze-btn" class="primary-btn">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> Analyze Resume
-                </button>
-            </div>
-        </section>
-
-        <!-- Loading State (Hidden by default) -->
-        <div id="loader" class="loader-container" style="display: none;">
-            <div class="spinner"></div>
-            <p>Scanning intelligence, formatting, and impact...</p>
-        </div>
-
-        <!-- Results Section (Hidden by default) -->
-        <section id="results-section" class="results-section" style="display: none;">
-            <div class="results-grid">
-                
-                <!-- Overall Score Card -->
-                <div class="result-card score-card">
-                    <h3>Overall Score</h3>
-                    <div class="circular-progress">
-                        <svg viewBox="0 0 100 100" class="progress-svg">
-                            <circle class="bg-circle" cx="50" cy="50" r="40"></circle>
-                            <!-- stroke-dasharray max is ~251 for r=40 -->
-                            <circle class="progress-circle" id="score-circle" cx="50" cy="50" r="40" stroke-dasharray="251" stroke-dashoffset="62"></circle>
-                        </svg>
-                        <div class="score-value">
-                            <span id="score-text">75</span><span class="percent">%</span>
-                        </div>
-                    </div>
-                    <p class="score-status" id="score-status-text">Good, but has room for improvement.</p>
-                </div>
-
-                <!-- ATS Compatibility Badge -->
-                <div class="result-card ats-card">
-                    <h3>ATS Compatibility</h3>
-                    <div class="badge-container">
-                        <div class="ats-badge warning" id="ats-badge">
-                            <i class="fa-solid fa-triangle-exclamation" id="ats-icon"></i>
-                            <span id="ats-text">Moderate Match</span>
-                        </div>
-                    </div>
-                    <p class="ats-desc">Your resume structure might face parsing issues with older ATS systems.</p>
-                </div>
-
-                <!-- Best Fit Roles -->
-                <div class="result-card highlight-card roles-card">
-                    <h3><i class="fa-solid fa-briefcase"></i> Best Fit Roles</h3>
-                    <div class="tags-container" id="roles-list">
-                        <span class="tag">Frontend Developer</span>
-                        <span class="tag">UI/UX Engineer</span>
-                        <span class="tag">Web Developer</span>
-                    </div>
-                </div>
-
-                <!-- Strengths List -->
-                <div class="result-card list-card success-card">
-                    <div class="card-header">
-                        <i class="fa-solid fa-check-circle icon-success"></i>
-                        <h3>Key Strengths</h3>
-                    </div>
-                    <ul id="strengths-list">
-                        <li>Strong action verbs used in recent experience.</li>
-                        <li>Clear progression in job titles.</li>
-                        <li>Education section is straightforward and well-formatted.</li>
-                    </ul>
-                </div>
-
-                <!-- Weaknesses List -->
-                <div class="result-card list-card danger-card">
-                    <div class="card-header">
-                        <i class="fa-solid fa-xmark-circle icon-danger"></i>
-                        <h3>Areas to Improve</h3>
-                    </div>
-                    <ul id="weaknesses-list">
-                        <li>Missing quantifiable metrics (numbers/percentages/impact).</li>
-                        <li>Summary statement is too generic and wordy.</li>
-                        <li>Some listed technical skills appear outdated.</li>
-                    </ul>
-                </div>
-
-                <!-- Actionable Improvement Tips -->
-                <div class="result-card tips-card full-width">
-                    <div class="card-header">
-                        <i class="fa-solid fa-lightbulb icon-warning"></i>
-                        <h3>Actionable Tips</h3>
-                    </div>
-                    <ul id="tips-list" class="tips-list">
-                        <li><strong>Quantify your achievements:</strong> Instead of "improved performance," write "improved performance by 20% over 6 months."</li>
-                        <li><strong>Tailor your summary:</strong> Highlight specific technologies and years of experience in the first sentence.</li>
-                        <li><strong>Streamline skills:</strong> Remove redundant soft skills (e.g., "team player") and demonstrate them within your experience bullets instead.</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <p>Built with <i class="fa-solid fa-heart" aria-hidden="true" style="color: #e25555;"></i> for career growth</p>
-            <p class="copyright">&copy; 2026 AI Resume Analyzer</p>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
+    <!-- PDF.js Context -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-    <script src="script.js"></script>
-</body>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
